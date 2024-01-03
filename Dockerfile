@@ -3,10 +3,10 @@ FROM golang:1.21
 WORKDIR /app
 
 # Download modules
-COPY go.mod go.sum ./
+COPY src/go.* ./
 RUN go mod download
 
-COPY *.go ./
+COPY src/*.go ./
 
 # Build
 RUN go build
