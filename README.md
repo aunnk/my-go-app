@@ -31,3 +31,17 @@ Redeploy the chart by running the following command.
 ```bash
 helm upgrade my-go-app .
 ```
+
+## Initialize infrastructure via Terraform
+
+### Initialize Terraform backend
+
+```bash
+terraform init -backend-config=config.tfbackend -reconfigure
+```
+
+### Apply Terraform templates
+
+```bash
+terraform apply -var-file=config.tfvars
+```
