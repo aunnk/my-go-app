@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-go-app
+  namespace: argocd
+  labels:
+    name: my-go-app
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/aunnk/my-go-app.git
+    targetRevision: HEAD
+    path: chart
+    helm:
+      valueFiles:
+        - values.yaml
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
