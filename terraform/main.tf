@@ -8,9 +8,13 @@ provider "aws" {
 }
 
 data "aws_availability_zones" "available" {}
+data "aws_caller_identity" "current" {}
 
 locals {
+  account_id = data.aws_caller_identity.current.account_id
   cluster_name = "my-eks-cluster"
+  app_namespace = "default"
+  app_service_account = "my-go-app"
 }
 
 module "vpc" {
