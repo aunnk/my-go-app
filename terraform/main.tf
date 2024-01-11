@@ -61,10 +61,10 @@ module "eks" {
   eks_managed_node_groups = {
     one = {
       name           = "node-group-1"
-      instance_types = ["t3a.small"]
+      instance_types = ["t2.micro"]
       min_size       = 1
-      max_size       = 3
-      desired_size   = 1
+      max_size       = 10
+      desired_size   = 6
     }
   }
 }

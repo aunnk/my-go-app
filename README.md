@@ -48,6 +48,14 @@ Redeploy the chart by running the following command. The release name should mat
 helm upgrade my-go-app .
 ```
 
+### Forward Application Service to Localhost
+
+Forward application service to access from local machine via <http://localhost:8080>.
+
+```bash
+kubectl -n default port-forward svc/my-go-app 8080:8080
+```
+
 ## Initialize Infrastructure via Terraform
 
 Go to the terraform directory.
@@ -70,6 +78,12 @@ terraform init -backend-config=config.tfbackend -reconfigure
 terraform apply -var-file=config.tfvars
 ```
 
+### Set Kubernetes Context from EKS
+
+```bash
+aws eks update-kubeconfig --region ap-southeast-1 --name my-eks-cluster --alias eks
+```
+
 ## Install ArgoCD
 
 Run the following command to install ArgoCD server and its components.
@@ -78,10 +92,15 @@ Run the following command to install ArgoCD server and its components.
 kubectl apply -k argocd
 ```
 
-Forward ArgoCD service to access from local machine via <https://localhost:8080>.
+Forward ArgoCD service to access from local machine via <https://localhost:8081>.
 
 ```bash
-kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl -n argocd port-forward svc/argocd-server 8081:443
+```
+
+Get initial admin password
+```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
 ## Expose Application Service
